@@ -64,6 +64,12 @@ pacstrap /mnt base base-devel
 ```
 genfstab -U /mnt >> /mnt/etc/fstab
 ```
+### Edit fstab to remove mnt from bind
+```
+nano /mnt/etc/fstab
+remove /mnt from boot entry
+```
+
 ## Change root to new system
 ```
 arch-chroot /mnt /bin/bash
@@ -99,7 +105,11 @@ pacman -S dialog wpa_supplicant refind-efi
 ```
 cp /usr/share/refind/refind_x64.efi /esp/EFI/Boot/bootx64.efi
 cp -r /usr/share/refind/drivers_x64/ /esp/EFI/Boot/
+cp -r /usr/share/refind/fonts/ /esp/EFI/Boot/
+cp -r /usr/share/refind/icons/ /esp/EFI/Boot/
+cp -r /usr/share/refind/images/ /esp/EFI/Boot/
 ```
+
 ## Edit /esp/EFI/Boot/refind.conf
 ```
 menuentry "Arch Linux" {
@@ -144,4 +154,3 @@ pacman -Qqe | grep -vx "$(pacman -Qqm)" > Packages
 ```
 xargs -a Packages pacman -S --noconfirm --needed
 ```
-
